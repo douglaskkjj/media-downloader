@@ -77,15 +77,27 @@ export class MediaService {
     }
 
     await new Promise<void>((resolve, reject) => {
-      unlink(inputPath, (error) => {
-        if (error) {
-          reject(error);
-          return;
-        }
-
+  const tentarRemover = (tentativas = 5) => {
+    unlink(inputPath, (error) => {
+      if (!error) {
         resolve();
-      });
+        return;
+      }
+
+      if (error.code === 'EBUSY' && tentativas > 0) {
+        setTimeout(() => {
+          tentarRemover(tentativas - 1);
+        }, 500);
+
+        return;
+      }
+
+      reject(error);
     });
+  };
+
+  tentarRemover();
+});
 
     return {
       status: 'concluido',

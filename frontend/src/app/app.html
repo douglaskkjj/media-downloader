@@ -1,0 +1,54 @@
+<div class="container">
+
+  <h1>Media Downloader</h1>
+
+  <p>Converte link em mp3 ou mp4</p>
+
+  <input
+    type="text"
+    placeholder="Cole o link do vídeo aqui"
+    [(ngModel)]="url"
+  />
+
+  <div class="formats">
+  <button
+    [class.selected]="format === 'mp3'"
+    (click)="selectFormat('mp3')"
+  >
+    MP3
+  </button>
+
+  <button
+    [class.selected]="format === 'mp4'"
+    (click)="selectFormat('mp4')"
+  >
+    MP4
+  </button>
+</div>
+
+  <p>Formato selecionado: {{ format }}</p>
+
+  <button
+  class="convert-button"
+  (click)="convert()"
+  [disabled]="loading"
+>
+  @if (loading) {
+    Convertendo...
+  } @else {
+    Converter
+  }
+</button>
+
+  @if (downloadUrl()) {
+  <p>Ta na mao chefe, aproveita</p>
+
+  <a
+    [href]="downloadUrl()"
+    target="_blank"
+  >
+    BAIXAR ARQUIVO
+  </a>
+}
+
+</div>

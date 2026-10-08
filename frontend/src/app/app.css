@@ -1,0 +1,85 @@
+.container {
+  max-width: 600px;
+  margin: 100px auto;
+  padding: 30px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+h1 {
+  margin-bottom: 10px;
+}
+
+p {
+  color: #666;
+}
+
+input {
+  width: 100%;
+  padding: 14px;
+  margin: 25px 0 20px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.formats {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+button,
+.download-button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+button {
+  background: #e5e5e5;
+}
+
+button:hover {
+  background: #d5d5d5;
+}
+
+.download-button {
+  display: inline-block;
+  margin-top: 20px;
+  background: #222;
+  color: white;
+  text-decoration: none;
+}
+
+.download-button:hover {
+  background: #444;
+}
+
+.formats button.selected {
+  background: #222;
+  color: white;
+}
+
+.convert-button {
+  margin-top: 20px;
+  background: #222;
+  color: white;
+}
+
+.convert-button:hover {
+  background: #444;
+}
+
+.convert-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.download-button {
+  margin-top: 20px;
+}
