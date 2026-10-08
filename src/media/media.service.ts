@@ -7,7 +7,12 @@ import {
 
 import * as path from 'path';
 import { randomUUID } from 'crypto';
-import { createReadStream, existsSync, unlink } from 'fs';
+import {
+  createReadStream,
+  existsSync,
+  mkdirSync,
+  unlink,
+} from 'fs';
 
 import { MediaProcessor } from './processors/media.processor';
 
@@ -63,6 +68,10 @@ export class MediaService {
       'output',
       outputFileName,
     );
+
+    mkdirSync(path.dirname(outputPath), {
+  recursive: true,
+});
 
     if (format === 'mp3') {
       await this.mediaProcessor.processToMp3(
