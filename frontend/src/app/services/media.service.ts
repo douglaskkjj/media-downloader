@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class MediaService {
 
-  private apiUrl = 'http://localhost:3000/media';
+  private apiUrl = 'https://media-downloader-bzg5.onrender.com/media';
 
   constructor(private http: HttpClient) {}
 

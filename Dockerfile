@@ -3,8 +3,10 @@ FROM node:22-bookworm
 WORKDIR /app
 
 RUN apt-get update \
-    && apt-get install -y ffmpeg python3 python3-pip \
-    && pip3 install --break-system-packages yt-dlp \
+    && apt-get install -y ffmpeg python3 python3-pip curl unzip \
+    && pip3 install --break-system-packages yt-dlp yt-dlp-ejs \
+    && curl -fsSL https://deno.land/install.sh | sh \
+    && ln -s /root/.deno/bin/deno /usr/local/bin/deno \
     && rm -rf /var/lib/apt/lists/*
 
 COPY package*.json ./
