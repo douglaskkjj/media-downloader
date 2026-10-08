@@ -22,20 +22,20 @@ export class MediaProcessor {
   }
 
   processToMp4(
-    inputPath: string,
-    outputPath: string,
-  ): Promise<void> {
-    return new Promise((resolve, reject) => {
-      ffmpeg(inputPath)
-        .videoCodec('libx264')
-        .audioCodec('aac')
-        .on('end', () => {
-          resolve();
-        })
-        .on('error', (error: Error) => {
-          reject(error);
-        })
-        .save(outputPath);
-    });
-  }
+  inputPath: string,
+  outputPath: string,
+): Promise<void> {
+  return new Promise((resolve, reject) => {
+    ffmpeg(inputPath)
+      .videoCodec('copy')
+      .audioCodec('copy')
+      .on('end', () => {
+        resolve();
+      })
+      .on('error', (error: Error) => {
+        reject(error);
+      })
+      .save(outputPath);
+  });
+}
 }
