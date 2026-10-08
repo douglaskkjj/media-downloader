@@ -35,8 +35,8 @@ export class App {
           console.log(response);
 
           this.downloadUrl.set(
-            'http://localhost:3000' + response.download
-          );
+    '       https://media-downloader-bzg5.onrender.com' + response.download
+        );
 
           this.cdr.detectChanges();
         },
