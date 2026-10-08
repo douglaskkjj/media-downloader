@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, signal } from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { MediaService } from './services/media.service';
 
@@ -12,13 +13,14 @@ export class App {
 
   format = 'mp3';
   url = '';
-  downloadUrl = signal('');
+  downloadUrl = signal<SafeUrl>('');
   loading = false;
 
   constructor(
-    private mediaService: MediaService,
-    private cdr: ChangeDetectorRef
-  ) {}
+  private mediaService: MediaService,
+  private cdr: ChangeDetectorRef,
+  private sanitizer: DomSanitizer
+) {}
 
   selectFormat(format: string) {
     this.format = format;
@@ -34,9 +36,13 @@ export class App {
         next: (response: any) => {
           console.log(response);
 
-          this.downloadUrl.set(
-    '       https://media-downloader-bzg5.onrender.com' + response.download
-        );
+          const url =
+  'https://media-downloader-bzg5.onrender.com' +
+  response.download;
+
+this.downloadUrl.set(
+  this.sanitizer.bypassSecurityTrustUrl(url)
+);
 
           this.cdr.detectChanges();
         },
