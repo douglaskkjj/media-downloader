@@ -121,41 +121,51 @@ reject(error);
     };
   }
 
-  downloadFile(fileName: string) {
-    const outputDir = path.resolve(
-      process.cwd(),
-      'media-files',
-      'output',
+  
+downloadFile(fileName: string) {
+  const outputDir = path.resolve(
+    process.cwd(),
+    'media-files',
+    'output',
+  );
+
+  const safeFileName = path.basename(fileName);
+
+  const filePath = path.join(
+    outputDir,
+    safeFileName,
+  );
+
+  if (!existsSync(filePath)) {
+    throw new NotFoundException(
+      'Arquivo não encontrado',
     );
-
-    const safeFileName = path.basename(fileName);
-
-    const filePath = path.join(
-      outputDir,
-      safeFileName,
-    );
-
-    if (!existsSync(filePath)) {
-      throw new NotFoundException(
-        'Arquivo não encontrado',
-      );
-    }
-
-    const file = createReadStream(filePath);
-
-    const extension =
-      path.extname(safeFileName).toLowerCase();
-
-    const contentType =
-      extension === '.mp3'
-        ? 'audio/mpeg'
-        : extension === '.mp4'
-          ? 'video/mp4'
-          : 'application/octet-stream';
-
-    return new StreamableFile(file, {
-      type: contentType,
-      disposition: `attachment; filename="${safeFileName}"`,
-    });
   }
+
+  const file = createReadStream(filePath);
+
+  const extension =
+    path.extname(safeFileName).toLowerCase();
+
+  const contentType =
+    extension === '.mp3'
+      ? 'audio/mpeg'
+      : extension === '.mp4'
+        ? 'video/mp4'
+        : 'application/octet-stream';
+
+  const encodedFileName = encodeURIComponent(safeFileName);
+
+  const fallbackFileName = safeFileName
+    .normalize('NFKD')
+    .replace(/[^\x20-\x7E]/g, '_')
+    .replace(/["\\]/g, '_');
+
+  return new StreamableFile(file, {
+    type: contentType,
+    disposition:
+      `attachment; filename="${fallbackFileName}"; filename*=UTF-8''${encodedFileName}`,
+  });
+}
+
 }
