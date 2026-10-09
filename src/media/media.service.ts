@@ -93,15 +93,20 @@ export class MediaService {
         return;
       }
 
-      if (error.code === 'EBUSY' && tentativas > 0) {
-        setTimeout(() => {
-          tentarRemover(tentativas - 1);
-        }, 500);
+      if (error.code === 'ENOENT') {
+  resolve();
+  return;
+}
 
-        return;
-      }
+if (error.code === 'EBUSY' && tentativas > 0) {
+  setTimeout(() => {
+    tentarRemover(tentativas - 1);
+  }, 500);
 
-      reject(error);
+  return;
+}
+
+reject(error);
     });
   };
 
