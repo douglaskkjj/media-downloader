@@ -83,3 +83,21 @@ button:hover {
 .download-button {
   margin-top: 20px;
 }
+
+.status-message {
+  margin-top: 16px;
+  color: #2563eb;
+  text-align: center;
+}
+
+.error-message {
+  margin-top: 16px;
+  color: #dc2626;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}

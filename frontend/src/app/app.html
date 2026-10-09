@@ -2,53 +2,69 @@
 
   <h1>Media Downloader</h1>
 
-  <p>Converte link em mp3 ou mp4</p>
+  <p>Baixe e converta seus arquivos de mídia</p>
 
   <input
     type="text"
-    placeholder="Cole o link do vídeo aqui"
+    placeholder="Cole a URL do vídeo aqui"
     [(ngModel)]="url"
+    [disabled]="loading"
   />
 
   <div class="formats">
-  <button
-    [class.selected]="format === 'mp3'"
-    (click)="selectFormat('mp3')"
-  >
-    MP3
-  </button>
+    <button
+      [class.selected]="format === 'mp3'"
+      (click)="selectFormat('mp3')"
+      [disabled]="loading"
+    >
+      MP3
+    </button>
 
-  <button
-    [class.selected]="format === 'mp4'"
-    (click)="selectFormat('mp4')"
-  >
-    MP4
-  </button>
-</div>
+    <button
+      [class.selected]="format === 'mp4'"
+      (click)="selectFormat('mp4')"
+      [disabled]="loading"
+    >
+      MP4
+    </button>
+  </div>
 
   <p>Formato selecionado: {{ format }}</p>
 
   <button
-  class="convert-button"
-  (click)="convert()"
-  [disabled]="loading"
->
-  @if (loading) {
-    Convertendo...
-  } @else {
-    Converter
+    class="convert-button"
+    (click)="convert()"
+    [disabled]="loading"
+  >
+    @if (loading) {
+      Processando...
+    } @else {
+      Converter
+    }
+  </button>
+
+  @if (statusMessage) {
+    <p class="status-message" role="status">
+      {{ statusMessage }}
+    </p>
   }
-</button>
+
+  @if (errorMessage) {
+    <p class="error-message" role="alert">
+      {{ errorMessage }}
+    </p>
+  }
 
   @if (downloadUrl()) {
-  <p>Ta na mao chefe, aproveita</p>
+    <p>Ta na mão chefe, aproveita!</p>
 
-  <a
-    [href]="downloadUrl()"
-    target="_blank"
-  >
-    BAIXAR ARQUIVO
-  </a>
-}
+    <a
+      class="download-button"
+      [href]="downloadUrl()"
+      target="_blank"
+    >
+      Baixar arquivo
+    </a>
+  }
 
 </div>
